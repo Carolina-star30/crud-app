@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import pixel.academy.crud_app.dao.StudentDAO;
 import pixel.academy.crud_app.entity.Student;
 
+import java.util.List;
+
 @SpringBootApplication
 public class CrudAppApplication {
 
@@ -21,9 +23,26 @@ public class CrudAppApplication {
 public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 
 	return runner -> {
-		createStudent(studentDAO);
+		//createStudent(studentDAO);
+		//createMultipleStudent(studentDAO);
+		//citim studentii
+		// readStudent(studentDAO);
+		queryForStudents(studentDAO);
 	};
 	}
+
+	private void queryForStudents(StudentDAO studentDAO) {
+
+		//obtain students list
+		List<Student> theStudents = studentDAO.findAll();
+
+		//get students list
+		for (Student newStudent : theStudents) {
+			System.out.println(newStudent);
+		}
+	}
+
+
 	private void createStudent(StudentDAO studentDAO) {
 
 		// create a Student object
@@ -35,6 +54,40 @@ public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		studentDAO.save(newStudent);
 
 		// GET ID-ul the save student
-		System.out.printf("Saved student. Generated id: " + newStudent.getId() );
+		System.out.println("Saved student. Generated id: " + newStudent.getId() );
+	}
+
+	private void createMultipleStudent(StudentDAO studentDAO) {
+		System.out.println("Creating 3 student objects ...");
+		Student newStudent1 = new Student("Marcu", "Abaduc", "marc@gamil.com");
+		Student newStudent2 = new Student("Ioana", "Mandru", "mindrui@yahoo.com");
+		Student newStudent3 = new Student("Arsenie", "Dima","arsen@gmail.com");
+
+		System.out.println("Saving students ...");
+				studentDAO.save(newStudent1);
+				studentDAO.save(newStudent2);
+				studentDAO.save(newStudent3);
+	}
+
+	private void readStudent(StudentDAO studentDAO) {
+
+		//create a Student object
+		System.out.println("creating new student object ...");
+		Student newStudent = new Student("mircea", "popescu", "popescu@hmail.com");
+
+		//save the student in DB
+		System.out.println("sabving the student ...");
+		studentDAO.save(newStudent);
+
+		// get de student id
+		int theId = newStudent.getId();
+		System.out.println("saved student. generated id: " + theId );
+
+		//recuperez/ recover studentul dupa id pk
+		System.out.println("retrieving student with id: " + theId);
+		Student myStudent = studentDAO.findById(theId);
+
+		//get the student details
+		System.out.println("found the student : " + myStudent);
 	}
 }
