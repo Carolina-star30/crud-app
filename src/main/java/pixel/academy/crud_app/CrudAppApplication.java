@@ -27,8 +27,20 @@ public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		//createMultipleStudent(studentDAO);
 		//citim studentii
 		// readStudent(studentDAO);
-		queryForStudents(studentDAO);
+		//queryForStudents(studentDAO);
+		queryForStudentsByLastName(studentDAO);
 	};
+	}
+
+	private void queryForStudentsByLastName(StudentDAO studentDAO) {
+
+		//returneaza lista de studenti
+		List<Student> theStudent = studentDAO.findByLastName("popescu");
+
+		//afiseaza lista de studenti
+		for(Student newStudent : theStudent) {
+			System.out.println(newStudent);
+		}
 	}
 
 	private void queryForStudents(StudentDAO studentDAO) {
