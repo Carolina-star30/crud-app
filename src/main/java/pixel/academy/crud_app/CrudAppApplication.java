@@ -28,10 +28,28 @@ public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		//citim studentii
 		// readStudent(studentDAO);
 		//queryForStudents(studentDAO);
-		queryForStudentsByLastName(studentDAO);
+		//queryForStudentsByLastName(studentDAO);
+		updateStudent(studentDAO);
 	};
 	}
+	private void updateStudent(StudentDAO studentDAO) {
+		//gaseste studentul in baza de date dupa id
+		int studentId = 1;
+		System.out.println("Getting student with id: " + studentId);
+		Student newStudent = studentDAO.findById(studentId);
 
+		//modifica prenumele studentului in ion
+		System.out.println("Updating student ....");
+		newStudent.setFirstName("Vasile");
+
+		//salveaza modif in baza de date
+		studentDAO.update(newStudent);
+
+		//afiseaza detaliile studentului actualizat
+		System.out.println("Updated student: " + newStudent);
+
+	}
+`
 	private void queryForStudentsByLastName(StudentDAO studentDAO) {
 
 		//returneaza lista de studenti

@@ -29,6 +29,12 @@ public class StudentDAOImplementation implements StudentDAO {
         entityManager.persist(theStudent);
     }
 
+    @Transactional
+    @Override
+    public void update(Student theStudent) {
+        entityManager.merge(theStudent);
+    }
+
     @Override
     public Student findById(Integer id) {
         return entityManager.find(Student.class, id);
